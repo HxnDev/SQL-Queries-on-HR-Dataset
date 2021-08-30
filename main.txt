@@ -1,0 +1,90 @@
+Q1.
+select last_name ||','|| job_id
+as "Employee and Title"
+from employees;
+
+Q2.
+select last_name,salary
+from employees
+where salary > 12000 or salary < 5000;
+
+Q3.
+select last_name
+from employees
+where last_name like '__a%';
+
+Q4.
+select last_name
+from employees
+where last_name like '%a%' and last_name like '%e%';
+
+Q5.
+select last_name, job_id, salary
+from employees
+where (job_id = 'SA_REP' or job_id = 'ST_CLERK') and salary not in (2500,3500,7000);
+
+Q6.
+select employee_id,last_name,salary, salary+(salary*15.5/100)
+as "New Salary" 
+from employees;
+
+Q7.
+select initcap(last_name) as "Name", length(last_name) as "Length of name"
+from employees
+where last_name like 'J%' or last_name like 'M%' or last_name like 'A%'
+order by last_name;
+
+Q8.
+select last_name, round(months_between(sysdate,hire_date),0)
+as "MONTHS_WORKED"
+from employees
+order by 2;
+
+Q9.
+select last_name, lpad(salary,15,'$') as "SALARY"
+from employees;
+
+Q10.
+select rpad(last_name,8), 
+rpad(' ',salary/1000+1, '*')
+as "EMPLOYEES_AND_THEIR_SALARIES"
+from employees
+order by salary desc;
+
+Q11.
+select last_name,hire_date, 
+to_char((next_day(hire_date, 'Monday')),'fmday," the "ddspth" of "month,yyyy')
+from employees;
+
+Q12.
+select job_id,
+case job_id
+when 'ST_CLERK' then 'E'
+when 'SA_REP' then 'D'
+when 'IT_PROG' then 'C'
+when 'ST_MAN' then 'B'
+when 'AD_PRES' then 'A'
+else '0'
+end grade
+from employees;
+
+Q13.
+select job_id,
+count(*)
+from employees
+group by job_id;
+
+Q14.
+select max(salary)-min(salary)
+as "DIFFERENCE"
+from employees;
+
+Q15.
+select job_id,
+sum(decode(department_id, 20, salary)) as "Department 20",
+sum(decode(department_id, 50, salary)) as "Department 50",
+sum(decode(department_id, 80, salary)) as "Department 80",
+sum(decode(department_id, 90, salary)) as "Department 90",
+sum(salary) as "Total Salary"
+from employees
+group by job_id;
